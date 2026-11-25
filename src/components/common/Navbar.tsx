@@ -50,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
     { label: 'Specials', id: 'specials' },
     { label: 'Gallery', id: 'gallery' },
     { label: 'Visit Us', id: 'visit' },
+    { label: 'Admin', id: 'admin' },
   ];
 
   const handleLinkClick = (id: string) => {

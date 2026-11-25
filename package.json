@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server:dev": "npm run dev --prefix server",
+    "server:build": "npm run build --prefix server",
+    "server:start": "npm run start --prefix server"
   },
   "dependencies": {
     "clsx": "^2.1.1",

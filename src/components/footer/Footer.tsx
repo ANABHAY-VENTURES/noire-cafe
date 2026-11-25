@@ -144,6 +144,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenReservation })
                   Visit Us
                 </button>
               </li>
+              <li>
+                <button onClick={() => onNavigate('admin')} className="text-caramel hover:underline transition-colors flex items-center gap-1 font-mono text-[11px] pt-1">
+                  <span>✦ Operations Portal</span>
+                </button>
+              </li>
             </ul>
           </div>
 

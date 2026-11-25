@@ -21,10 +21,12 @@ import { CartDrawer } from './components/cart/CartDrawer';
 import { CheckoutModal } from './components/checkout/CheckoutModal';
 import { Footer } from './components/footer/Footer';
 
+import { AdminApp } from './admin/AdminApp';
+
 const AppContent: React.FC = () => {
   const { scrollTo } = useLenis();
   useScrollReveal();
-  const [currentView, setCurrentView] = useState<'home' | 'menu'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'admin'>('home');
   const [reservationOpen, setReservationOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [preloaderDone, setPreloaderDone] = useState(false);
@@ -33,14 +35,18 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
-      if (hash === '#menu-page' || hash === '#menu') {
+      if (hash === '#admin' || hash === '#/admin' || hash === '#dashboard') {
+        setCurrentView('admin');
+      } else if (hash === '#menu-page' || hash === '#menu') {
         setCurrentView('menu');
       } else {
         setCurrentView('home');
       }
     };
 
-    if (window.location.hash === '#menu-page' || window.location.hash === '#menu') {
+    if (window.location.hash === '#admin' || window.location.hash === '#/admin' || window.location.hash === '#dashboard') {
+      setCurrentView('admin');
+    } else if (window.location.hash === '#menu-page' || window.location.hash === '#menu') {
       setCurrentView('menu');
     }
 
@@ -57,6 +63,13 @@ const AppContent: React.FC = () => {
   }, [currentView]);
 
   const handleNavigate = (target: string) => {
+    if (target === 'admin') {
+      setCurrentView('admin');
+      window.location.hash = 'admin';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (target === 'menu') {
       setCurrentView('menu');
       window.location.hash = 'menu-page';
@@ -82,6 +95,15 @@ const AppContent: React.FC = () => {
       scrollTo(`#${target}`, { offset: -60, duration: 1.2 });
     }
   };
+
+  if (currentView === 'admin') {
+    return (
+      <div className="relative min-h-screen bg-ivory text-espresso font-sans">
+        <CustomCursor />
+        <AdminApp onBackToSite={() => handleNavigate('home')} />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-ivory text-espresso selection:bg-caramel/25 selection:text-espresso font-sans">
