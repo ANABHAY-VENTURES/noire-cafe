@@ -1,0 +1,17 @@
+{
+  "name": "NOIRÉ Café — Coffee. Crafted Slowly.",
+  "short_name": "NOIRÉ Café",
+  "description": "A minimalist, modern sanctuary inspired by Swiss editorial design, contemporary luxury and independent specialty coffee culture.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F1E8",
+  "theme_color": "#30251F",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

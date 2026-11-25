@@ -108,6 +108,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onExploreStory }) => 
                 alt="Slow drip specialty coffee in a warm ceramic vessel at NOIRÉ"
                 className="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                 loading="eager"
+                fetchPriority="high"
+                width="600"
+                height="750"
               />
 
               {/* Editorial Gradient Overlay */}

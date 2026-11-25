@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#30251F"/>
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#BC8B62" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="50" y="65" font-family="'Cormorant Garamond', Georgia, serif" font-size="44" font-weight="600" fill="#F5F1E8" text-anchor="middle">N</text>
+</svg>
