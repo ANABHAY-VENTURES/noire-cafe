@@ -11,10 +11,6 @@ export default defineConfig({
     },
   },
   build: {
-    target: 'es2020',
-    cssCodeSplit: true,
-    sourcemap: false,
-    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -26,5 +22,7 @@ export default defineConfig({
         },
       },
     },
+    chunkSizeWarningLimit: 600,
   },
 });
+

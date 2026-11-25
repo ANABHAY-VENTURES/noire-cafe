@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onExploreStory }) => 
       {/* Main Hero Centerpiece */}
       <div className="relative max-w-7xl mx-auto w-full my-auto py-10 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
+
           {/* Left Text Block */}
           <div className="lg:col-span-7 space-y-6 md:space-y-8">
             <motion.div
@@ -82,7 +82,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onExploreStory }) => 
                 onClick={onExploreMenu}
                 className="px-7 py-3.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel hover:shadow-lg transition-all duration-300"
               >
-                Explore The Menu
+                Explore Menu
               </MagneticButton>
 
               <button
@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onExploreStory }) => 
                 className="px-7 py-3.5 rounded-full border border-espresso/20 text-espresso text-xs uppercase tracking-widest font-medium hover:bg-ivory-dark/60 hover:border-espresso/40 transition-all duration-300 flex items-center gap-2 group"
               >
                 <Compass className="w-3.5 h-3.5 text-caramel transition-transform group-hover:rotate-45" />
-                <span>Our Philosophy</span>
+                <span>Discover Our Story</span>
               </button>
             </motion.div>
           </div>
@@ -108,9 +108,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onExploreStory }) => 
                 alt="Slow drip specialty coffee in a warm ceramic vessel at NOIRÉ"
                 className="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                 loading="eager"
-                fetchPriority="high"
-                width="600"
-                height="750"
               />
 
               {/* Editorial Gradient Overlay */}

@@ -87,7 +87,7 @@ export const StorySection: React.FC = () => {
               </span>
 
               <p className="font-serif text-2xl sm:text-3xl lg:text-4xl text-espresso font-normal leading-snug">
-                “We created NOIRÉ as an antidote to hurried modern life—a sanctuary where coffee is treated not as caffeine on the run, but as agricultural poetry.”
+                “At NOIRÉ, we believe coffee is more than a daily routine. It is a moment to pause, connect and enjoy the little things. Every cup is thoughtfully prepared, every detail matters, and every visit should feel special.”
               </p>
 
               <div className="text-sm sm:text-base text-espresso/75 space-y-4 leading-relaxed font-sans font-light">

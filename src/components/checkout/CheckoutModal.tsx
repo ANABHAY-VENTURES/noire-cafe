@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, ArrowRight, Clock } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
@@ -24,18 +24,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const gstTax = Math.round(subtotal * 0.05);
   const totalAmount = subtotal + gstTax;
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen && !isProcessing) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isProcessing, onClose]);
-
   const handleProcessOrder = (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -58,13 +46,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   return (
     <AnimatePresence>
       {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="checkout-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-espresso/70 backdrop-blur-sm overflow-y-auto"
-          onClick={handleFinish}
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-espresso/70 backdrop-blur-sm overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -77,8 +59,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             {!isProcessing && (
               <button
                 onClick={handleFinish}
-                className="absolute top-6 right-6 p-2 rounded-full bg-ivory-dark text-espresso/60 hover:text-espresso hover:bg-espresso/10 transition-colors focus-visible:ring-2 focus-visible:ring-caramel"
-                aria-label="Close checkout modal"
+                className="absolute top-6 right-6 p-2 rounded-full bg-ivory-dark text-espresso/60 hover:text-espresso hover:bg-espresso/10 transition-colors"
+                aria-label="Close checkout"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -137,7 +119,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 <div className="pt-2">
                   <button
                     onClick={handleFinish}
-                    className="px-8 py-3.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors shadow-md focus-visible:ring-2 focus-visible:ring-caramel"
+                    className="px-8 py-3.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors shadow-md"
                   >
                     Return to Café Menu
                   </button>
@@ -150,7 +132,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   <span className="text-[10px] font-mono uppercase tracking-widest text-olive block mb-1">
                     NOIRÉ SERVICE CHECKOUT
                   </span>
-                  <h3 id="checkout-modal-title" className="font-serif text-2xl sm:text-3xl font-medium text-espresso">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-medium text-espresso">
                     Finalize Your Café Order
                   </h3>
                   <p className="text-xs text-espresso/60 mt-1">
@@ -194,14 +176,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {diningOption === 'dine-in' ? (
                       <div>
-                        <label htmlFor="chk-table" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
+                        <label className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
                           Table Location
                         </label>
                         <select
-                          id="chk-table"
                           value={tableNumber}
                           onChange={(e) => setTableNumber(e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel focus-visible:ring-2 focus-visible:ring-caramel font-mono"
+                          className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
                         >
                           <option>Table 01 · North Window Lounge</option>
                           <option>Table 02 · Courtyard Olive Tree</option>
@@ -212,59 +193,55 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                       </div>
                     ) : (
                       <div>
-                        <label htmlFor="chk-phone" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
+                        <label className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
                           Pickup Contact Phone
                         </label>
                         <input
-                          id="chk-phone"
                           type="tel"
                           required
-                          aria-required="true"
                           value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
                           placeholder="+91 98765 43210"
-                          className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel focus-visible:ring-2 focus-visible:ring-caramel font-mono"
-                        />
+                          className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
+                        >
+                        </input>
                       </div>
                     )}
 
                     <div>
-                      <label htmlFor="chk-name" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
+                      <label className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
                         Guest Name
                       </label>
                       <input
-                        id="chk-name"
                         type="text"
                         required
-                        aria-required="true"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
                         placeholder="Aarav Sharma"
-                        className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel focus-visible:ring-2 focus-visible:ring-caramel font-sans"
+                        className="w-full px-4 py-3 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-sans"
                       />
                     </div>
                   </div>
 
                   {/* Special Notes */}
                   <div>
-                    <label htmlFor="chk-notes" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
                       Barista Notes (Optional)
                     </label>
                     <input
-                      id="chk-notes"
                       type="text"
                       value={specialInstructions}
                       onChange={(e) => setSpecialInstructions(e.target.value)}
                       placeholder="e.g. Extra dry oat foam, pour hot water on the side"
-                      className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel focus-visible:ring-2 focus-visible:ring-caramel"
+                      className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel"
                     />
                   </div>
 
                   {/* Payment Method */}
                   <div>
-                    <span className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
                       Payment Method
-                    </span>
+                    </label>
                     <div className="grid grid-cols-3 gap-2">
                       <button
                         type="button"
@@ -322,7 +299,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                     <button
                       type="submit"
                       disabled={isProcessing || items.length === 0}
-                      className="w-full py-4 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-caramel"
+                      className="w-full py-4 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
                     >
                       {isProcessing ? (
                         <>

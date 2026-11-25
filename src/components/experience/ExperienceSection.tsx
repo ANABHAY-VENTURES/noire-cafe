@@ -93,7 +93,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
               data-reveal="heading"
               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-ivory tracking-tight"
             >
-              From Terroir to Cup.
+              The Art Behind Every Cup.
             </h2>
           </div>
           <p className="text-sm md:text-base text-ivory/70 max-w-md font-sans leading-relaxed">

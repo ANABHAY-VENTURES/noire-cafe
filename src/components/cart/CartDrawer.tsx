@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
@@ -20,18 +20,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout, onExploreMen
     formattedSubtotal,
   } = useCart();
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isCartOpen) {
-        closeCart();
-      }
-    };
-    if (isCartOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isCartOpen, closeCart]);
-
   const gstTax = Math.round(subtotal * 0.05); // 5% GST for café
   const finalTotal = subtotal + gstTax;
   const formattedFinalTotal = `₹${finalTotal.toLocaleString('en-IN')}`;
@@ -39,12 +27,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout, onExploreMen
   return (
     <AnimatePresence>
       {isCartOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cart-drawer-title"
-          className="fixed inset-0 z-50 overflow-hidden"
-        >
+        <div className="fixed inset-0 z-50 overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -72,7 +55,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout, onExploreMen
                     {totalItems}
                   </div>
                   <div>
-                    <h2 id="cart-drawer-title" className="font-serif text-xl font-medium text-espresso">
+                    <h2 className="font-serif text-xl font-medium text-espresso">
                       Your Order
                     </h2>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-olive block">
@@ -83,8 +66,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout, onExploreMen
 
                 <button
                   onClick={closeCart}
-                  className="p-2 rounded-full hover:bg-espresso/5 text-espresso/70 hover:text-espresso transition-colors focus-visible:ring-2 focus-visible:ring-caramel"
-                  aria-label="Close cart drawer"
+                  className="p-2 rounded-full hover:bg-espresso/5 text-espresso/70 hover:text-espresso transition-colors"
+                  aria-label="Close cart"
                 >
                   <X className="w-5 h-5" />
                 </button>

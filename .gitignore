@@ -11,8 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-*.tsbuildinfo
 .tsbuildinfo
+*.tsbuildinfo
+tsconfig.tsbuildinfo
 scratch_make_commits.ps1
 
 # Editor directories and files
