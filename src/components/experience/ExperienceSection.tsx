@@ -73,31 +73,31 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
   };
 
   return (
-    <section id="experience" className="bg-espresso text-ivory relative overflow-hidden">
-      {/* Subtle Grain Overlay */}
-      <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none" />
+    <section id="experience" className="bg-[#09090B] text-white relative overflow-hidden border-t border-white/10">
+      {/* Background Architectural Grid Pattern */}
+      <div className="absolute inset-0 bg-architectural-grid opacity-20 pointer-events-none" />
 
       {/* =========================================================================
           SECTION 3: THE CRAFT
           ========================================================================= */}
-      <div className="py-24 md:py-36 px-6 md:px-12 max-w-7xl mx-auto relative z-10">
+      <div className="py-24 md:py-36 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-16 border-b border-ivory/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-16 border-b border-white/10">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-caramel mb-3">
+            <div className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-champagne mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>03 / THE CRAFT SEQUENCE</span>
+              <span>[03 // THE EXTRACTION SEQUENCE]</span>
             </div>
             <h2
               data-reveal="heading"
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-ivory tracking-tight"
+              className="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
             >
               The Art Behind Every Cup.
             </h2>
           </div>
-          <p className="text-sm md:text-base text-ivory/70 max-w-md font-sans leading-relaxed">
-            Four disciplined milestones that transform high-altitude coffee cherries into a sublime sensory moment.
+          <p className="text-sm md:text-base text-white/60 max-w-md font-sans font-light leading-relaxed">
+            Four disciplined milestones transforming high-altitude coffee cherries into a sublime sensory moment.
           </p>
         </div>
 
@@ -110,40 +110,40 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group rounded-2xl bg-ivory/5 border border-ivory/10 overflow-hidden hover:border-caramel/40 hover:bg-ivory/10 transition-all duration-500 flex flex-col justify-between"
+              className="group rounded-2xl bg-[#121214] border border-white/10 overflow-hidden hover:border-champagne/40 transition-all duration-500 flex flex-col justify-between"
             >
               <div>
-                {/* Visual Photography with Image Zoom Transition */}
-                <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-espresso/80">
+                {/* Visual Photography with Subtle Hover Zoom */}
+                <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-black">
                   <img
                     src={card.image}
                     alt={card.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                    className="w-full h-full object-cover grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/20 to-transparent opacity-70 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
 
                   {/* Number Badge */}
-                  <div className="absolute top-3.5 left-3.5 bg-espresso/80 backdrop-blur-sm text-caramel px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase border border-ivory/10">
-                    PHASE {card.number}
+                  <div className="absolute top-3.5 left-3.5 bg-black/80 backdrop-blur-md text-champagne px-3 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase border border-white/15">
+                    PHASE [{card.number}]
                   </div>
 
-                  <div className="absolute bottom-3 left-3 text-[10px] font-mono uppercase tracking-widest text-olive-light">
+                  <div className="absolute bottom-3 left-3 text-[9px] font-mono uppercase tracking-[0.2em] text-white/70">
                     {card.tag}
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-3">
-                  <h3 className="font-serif text-2xl font-medium text-ivory group-hover:text-caramel transition-colors">
+                <div className="p-6 space-y-2.5">
+                  <h3 className="font-sans text-xl font-bold text-white group-hover:text-champagne transition-colors">
                     {card.title}
                   </h3>
 
-                  <div className="text-xs font-mono text-caramel/90">
+                  <div className="text-[11px] font-mono text-champagne">
                     {card.subtitle}
                   </div>
 
-                  <p className="text-xs text-ivory/75 leading-relaxed font-sans font-light">
+                  <p className="text-xs text-white/60 leading-relaxed font-sans font-light">
                     {card.description}
                   </p>
                 </div>
@@ -151,7 +151,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
 
               {/* Card Footer Detail */}
               <div className="p-6 pt-0">
-                <div className="p-3 rounded-xl bg-ivory/5 border border-ivory/10 text-[11px] font-mono text-ivory/60 leading-relaxed">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-mono text-white/50 leading-relaxed">
                   {card.details}
                 </div>
               </div>
@@ -164,7 +164,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
       {/* =========================================================================
           SECTION 4: EXPERIENCE (Cinematic Full-Width Atmospheric Hero)
           ========================================================================= */}
-      <div className="relative min-h-[70vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden border-t border-ivory/15">
+      <div className="relative min-h-[70vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden border-t border-white/10">
         
         {/* Full-Width Cinematic Café Interior Image with Parallax */}
         <div className="absolute inset-0 z-0">
@@ -172,26 +172,26 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
             data-parallax
             src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=85"
             alt="Cinematic calm interior of NOIRÉ Café Zürich"
-            className="w-full h-[120%] -top-[10%] object-cover object-center scale-105"
+            className="w-full h-[120%] -top-[10%] object-cover object-center scale-105 grayscale contrast-125"
             loading="lazy"
           />
           {/* Editorial Gradient & Tonal Tint */}
-          <div className="absolute inset-0 bg-espresso/65 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/40 to-espresso/80" />
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/80" />
         </div>
 
         {/* Central Overlay Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 text-center space-y-8 py-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center space-y-8 py-20">
           
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ivory/10 backdrop-blur-md border border-ivory/20 text-caramel text-xs font-mono uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-champagne text-[11px] font-mono uppercase tracking-[0.25em]"
           >
             <Compass className="w-3.5 h-3.5" />
-            <span>04 / THE SANCTUARY</span>
+            <span>[04 // THE ARCHITECTURAL SANCTUARY]</span>
           </motion.div>
 
           {/* Large Overlay Typography */}
@@ -200,10 +200,10 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.15 }}
-            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-normal text-ivory tracking-tight leading-[0.95]"
+            className="font-sans text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white tracking-tight leading-[0.95]"
           >
             Stay a{' '}
-            <span className="italic font-light text-caramel">little</span>{' '}
+            <span className="font-serif italic font-light text-champagne">little</span>{' '}
             longer.
           </motion.h2>
 
@@ -212,9 +212,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-base sm:text-lg md:text-xl text-ivory/80 max-w-xl mx-auto font-sans font-light leading-relaxed"
+            className="text-base sm:text-lg text-white/70 max-w-xl mx-auto font-sans font-light leading-relaxed"
           >
-            Whether you stop by for a morning espresso or sink into a reading corner for three hours, our doors are open for quiet reflection and shared moments.
+            Whether you stop by for a dialed single-origin espresso or spend the afternoon reading beside natural light, our doors are open for quiet reflection and sensory calm.
           </motion.p>
 
           {/* Minimal CTA Linking to Visit Us */}
@@ -227,9 +227,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
           >
             <button
               onClick={handleScrollToVisit}
-              className="group px-8 py-4 rounded-full bg-ivory text-espresso text-xs uppercase tracking-widest font-medium hover:bg-caramel hover:text-ivory transition-all duration-300 flex items-center gap-2.5 shadow-2xl"
+              className="group px-8 py-4 rounded-full bg-white text-black text-xs font-mono uppercase tracking-widest font-semibold hover:bg-champagne transition-all duration-300 flex items-center gap-2.5 shadow-2xl"
             >
-              <MapPin className="w-3.5 h-3.5 text-caramel group-hover:text-ivory transition-colors" />
+              <MapPin className="w-3.5 h-3.5 text-black" />
               <span>Visit Us in Zürich</span>
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
@@ -238,9 +238,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
         </div>
 
         {/* Bottom Ambient Coordinates Bar */}
-        <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-widest text-ivory/50 border-t border-ivory/10 pt-4">
+        <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] font-mono uppercase tracking-widest text-white/40 border-t border-white/10 pt-4">
           <span>BAHNHOFSTRASSE 42 · 8001 ZÜRICH</span>
-          <span>ACOUSTIC LOW-DB COMFORT</span>
+          <span>ACOUSTIC LOW-DB ARCHITECTURE</span>
         </div>
 
       </div>

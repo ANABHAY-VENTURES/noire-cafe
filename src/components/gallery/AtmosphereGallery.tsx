@@ -32,7 +32,7 @@ export const AtmosphereGallery: React.FC = () => {
     }
   }, [currentIndex, filteredPhotos]);
 
-  // Keyboard navigation: ESC to close, Left/Right arrows to navigate
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedPhoto) return;
@@ -50,7 +50,7 @@ export const AtmosphereGallery: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedPhoto, handleNextPhoto, handlePrevPhoto]);
 
-  // Editorial captions mapped by photo id
+  // Editorial captions
   const CAPTIONS: Record<string, string> = {
     g1: 'Monolithic Terrazzo Bar · Calibrated for silent workflow and gentle morning light reflection.',
     g2: 'Hand-Thrown Ceramic Dripper · Flatbed extraction engineered with Swiss stoneware for thermal preservation.',
@@ -63,21 +63,21 @@ export const AtmosphereGallery: React.FC = () => {
   };
 
   return (
-    <section id="gallery" className="py-24 md:py-36 px-6 md:px-12 bg-ivory border-t border-espresso/10 relative">
+    <section id="gallery" className="py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-espresso/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-olive mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-caramel" />
-              <span>05 / THE VISUAL ARCHIVE</span>
+            <div className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-champagne mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-champagne" />
+              <span>[05 // VISUAL MONOGRAPH]</span>
             </div>
-            <h2 data-reveal="heading" className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal text-espresso tracking-tight">
-              Café Atmosphere.
+            <h2 data-reveal="heading" className="font-sans text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
+              Atelier Atmosphere.
             </h2>
           </div>
-          <p className="text-sm md:text-base text-espresso/70 max-w-md font-sans leading-relaxed">
+          <p className="text-sm md:text-base text-white/60 max-w-md font-sans font-light leading-relaxed">
             Constructed with acoustic silence in mind. Minimalist Swiss limestone, smoked alpine oak, and soft morning daylight.
           </p>
         </div>
@@ -88,10 +88,10 @@ export const AtmosphereGallery: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all duration-300 border ${
                 activeFilter === cat
-                  ? 'bg-espresso text-ivory shadow-sm'
-                  : 'bg-ivory-dark/60 text-espresso/70 hover:bg-ivory-dark hover:text-espresso'
+                  ? 'bg-white text-black border-white font-bold shadow-md'
+                  : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
               }`}
             >
               {cat}
@@ -99,167 +99,107 @@ export const AtmosphereGallery: React.FC = () => {
           ))}
         </div>
 
-        {/* Asymmetric Editorial Masonry Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 pt-4"
-        >
-          <AnimatePresence>
-            {filteredPhotos.map((photo, idx) => {
-              // Create deliberate asymmetric rhythm across 12-column grid
-              let colSpanClass = 'lg:col-span-4';
-              let aspectClass = 'aspect-[4/3]';
+        {/* Asymmetrical Editorial Gallery Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
+          {filteredPhotos.map((photo, index) => {
+            const isTall = index === 0 || index === 4;
+            const caption = CAPTIONS[photo.id] || photo.title;
 
-              if (photo.aspect === 'landscape') {
-                colSpanClass = idx % 2 === 0 ? 'lg:col-span-8' : 'lg:col-span-7';
-                aspectClass = 'aspect-[16/10]';
-              } else if (photo.aspect === 'portrait') {
-                colSpanClass = 'lg:col-span-4 sm:col-span-1';
-                aspectClass = 'aspect-[3/4]';
-              } else if (photo.aspect === 'square') {
-                colSpanClass = 'lg:col-span-5 sm:col-span-1';
-                aspectClass = 'aspect-square';
-              }
+            return (
+              <motion.div
+                key={photo.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                onClick={() => setSelectedPhoto(photo)}
+                className={`group relative rounded-2xl overflow-hidden cursor-pointer bg-[#121214] border border-white/10 ${
+                  isTall ? 'sm:row-span-2 aspect-[3/4]' : 'aspect-[4/3]'
+                }`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt || photo.title}
+                  className="w-full h-full object-cover grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                  loading="lazy"
+                />
 
-              return (
-                <motion.div
-                  key={photo.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.05 }}
-                  onClick={() => setSelectedPhoto(photo)}
-                  className={`group relative rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl border border-espresso/10 bg-ivory-dark ${colSpanClass}`}
-                >
-                  <div className={`relative w-full h-full ${aspectClass} overflow-hidden`}>
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      loading="lazy"
-                    />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                    {/* Subtle Editorial Overlay on Hover */}
-                    <div className="absolute inset-0 bg-espresso/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 text-ivory backdrop-blur-[2px]">
-                      <div className="flex justify-between items-start">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-caramel bg-espresso/80 px-3 py-1 rounded-full border border-ivory/15">
-                          {photo.category}
-                        </span>
-                        <div className="w-9 h-9 rounded-full bg-ivory/20 backdrop-blur-sm flex items-center justify-center text-ivory group-hover:rotate-45 transition-transform duration-300">
-                          <Maximize2 className="w-4 h-4" />
-                        </div>
-                      </div>
+                {/* Corner Crosshair */}
+                <div className="absolute top-3 left-3 text-[10px] font-mono text-champagne opacity-0 group-hover:opacity-100 transition-opacity">
+                  [{String(index + 1).padStart(2, '0')}]
+                </div>
 
-                      <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-olive-light uppercase tracking-wider block">
-                          {photo.location}
-                        </span>
-                        <h3 className="font-serif text-xl sm:text-2xl font-medium text-ivory">
-                          {photo.title}
-                        </h3>
-                        <p className="text-xs text-ivory/80 font-sans line-clamp-2 pt-1 font-light">
-                          {CAPTIONS[photo.id] || photo.alt}
-                        </p>
-                      </div>
-                    </div>
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-champagne block mb-1">
+                      {photo.category}
+                    </span>
+                    <p className="text-xs font-sans text-white/80 line-clamp-1 group-hover:text-white">
+                      {caption}
+                    </p>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                  <Maximize2 className="w-4 h-4 text-white/50 group-hover:text-champagne transition-colors shrink-0 ml-2" />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Fullscreen Lightbox Modal */}
+      {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedPhoto && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-espresso/95 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
             onClick={() => setSelectedPhoto(null)}
           >
-            {/* Close Button */}
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-6 right-6 p-3 rounded-full bg-ivory/10 text-ivory hover:bg-ivory hover:text-espresso transition-colors z-50 shadow-lg"
-              aria-label="Close lightbox (ESC)"
-              title="Close (ESC)"
+              className="absolute top-6 right-6 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 z-50"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
 
-            {/* Previous Image Chevron */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handlePrevPhoto();
               }}
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-ivory/10 text-ivory hover:bg-ivory hover:text-espresso transition-colors z-50 shadow-lg"
-              aria-label="Previous photo (Left Arrow)"
-              title="Previous (Left Arrow)"
+              className="absolute left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 z-50 hidden sm:block"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
 
-            {/* Next Image Chevron */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleNextPhoto();
               }}
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-ivory/10 text-ivory hover:bg-ivory hover:text-espresso transition-colors z-50 shadow-lg"
-              aria-label="Next photo (Right Arrow)"
-              title="Next (Right Arrow)"
+              className="absolute right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 z-50 hidden sm:block"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
 
-            {/* Modal Image Box */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-5xl w-full max-h-[90vh] flex flex-col rounded-3xl overflow-hidden bg-ivory border border-espresso/20 shadow-2xl"
+            <div
+              className="max-w-4xl max-h-[85vh] flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[16/10] bg-espresso overflow-hidden max-h-[68vh] flex items-center justify-center">
-                <img
-                  src={selectedPhoto.src}
-                  alt={selectedPhoto.alt}
-                  className="w-full h-full object-cover"
-                />
+              <img
+                src={selectedPhoto.src}
+                alt={selectedPhoto.alt || selectedPhoto.title}
+                className="max-h-[70vh] object-contain rounded-2xl shadow-2xl border border-white/15"
+              />
+              <div className="mt-4 text-center">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-champagne block">
+                  {selectedPhoto.category}
+                </span>
+                <p className="text-sm font-sans text-white/80 mt-1 max-w-lg">
+                  {CAPTIONS[selectedPhoto.id] || selectedPhoto.title}
+                </p>
               </div>
-
-              {/* Lightbox Caption Bar */}
-              <div className="p-6 sm:p-8 bg-ivory flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-espresso/10">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-olive bg-olive/15 px-2.5 py-0.5 rounded-full">
-                      {selectedPhoto.category}
-                    </span>
-                    <span className="text-xs font-mono text-espresso/60">
-                      {selectedPhoto.location}
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-2xl font-medium text-espresso">
-                    {selectedPhoto.title}
-                  </h3>
-                  <p className="text-xs text-espresso/70 font-sans max-w-xl">
-                    {CAPTIONS[selectedPhoto.id] || selectedPhoto.alt}
-                  </p>
-                </div>
-
-                <div className="text-right shrink-0">
-                  <div className="font-mono text-xs font-semibold text-espresso">
-                    0{currentIndex + 1} / 0{filteredPhotos.length}
-                  </div>
-                  <span className="text-[10px] font-mono text-espresso/50 uppercase tracking-wider block">
-                    Use Arrow Keys or ESC
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>

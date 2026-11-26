@@ -158,7 +158,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   return (
     <AnimatePresence>
       {isOpen && (
-        <div 
+        <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="checkout-modal-title"
@@ -275,22 +275,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                       <button
                         type="button"
                         onClick={() => setDiningOption('dine_in')}
-                        className={`py-3 px-4 rounded-2xl border text-xs font-mono uppercase tracking-wider transition-all ${
-                          diningOption === 'dine_in'
-                            ? 'bg-espresso text-ivory border-espresso font-medium shadow-sm'
-                            : 'bg-ivory-light border-espresso/20 text-espresso/70 hover:border-espresso/40'
-                        }`}
+                        className={`py-3 px-4 rounded-2xl border text-xs font-mono uppercase tracking-wider transition-all ${diningOption === 'dine_in'
+                          ? 'bg-espresso text-ivory border-espresso font-medium shadow-sm'
+                          : 'bg-ivory-light border-espresso/20 text-espresso/70 hover:border-espresso/40'
+                          }`}
                       >
                         Dine-In
                       </button>
                       <button
                         type="button"
                         onClick={() => setDiningOption('takeaway')}
-                        className={`py-3 px-4 rounded-2xl border text-xs font-mono uppercase tracking-wider transition-all ${
-                          diningOption === 'takeaway'
-                            ? 'bg-espresso text-ivory border-espresso font-medium shadow-sm'
-                            : 'bg-ivory-light border-espresso/20 text-espresso/70 hover:border-espresso/40'
-                        }`}
+                        className={`py-3 px-4 rounded-2xl border text-xs font-mono uppercase tracking-wider transition-all ${diningOption === 'takeaway'
+                          ? 'bg-espresso text-ivory border-espresso font-medium shadow-sm'
+                          : 'bg-ivory-light border-espresso/20 text-espresso/70 hover:border-espresso/40'
+                          }`}
                       >
                         Takeaway
                       </button>
@@ -388,11 +386,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('razorpay')}
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
-                          paymentMethod === 'razorpay'
-                            ? 'bg-ivory-light border-caramel shadow-sm'
-                            : 'bg-ivory border-espresso/15 hover:border-espresso/30'
-                        }`}
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${paymentMethod === 'razorpay'
+                          ? 'bg-ivory-light border-caramel shadow-sm'
+                          : 'bg-ivory border-espresso/15 hover:border-espresso/30'
+                          }`}
                       >
                         <div className="flex items-center gap-2 text-espresso font-semibold text-xs font-mono uppercase">
                           <CreditCard className="w-4 h-4 text-caramel" />
@@ -406,11 +403,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('cash')}
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
-                          paymentMethod === 'cash'
-                            ? 'bg-ivory-light border-caramel shadow-sm'
-                            : 'bg-ivory border-espresso/15 hover:border-espresso/30'
-                        }`}
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${paymentMethod === 'cash'
+                          ? 'bg-ivory-light border-caramel shadow-sm'
+                          : 'bg-ivory border-espresso/15 hover:border-espresso/30'
+                          }`}
                       >
                         <div className="flex items-center gap-2 text-espresso font-semibold text-xs font-mono uppercase">
                           <span>Pay at Counter</span>

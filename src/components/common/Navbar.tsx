@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Clock, MapPin, ShoppingBag, X } from 'lucide-react';
+import { ArrowUpRight, ShoppingBag, X } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { MagneticButton } from './MagneticButton';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       
-      setIsScrolled(scrollTop > 30);
+      setIsScrolled(scrollTop > 20);
       setScrollProgress(progress);
     };
 
@@ -30,7 +30,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -43,14 +42,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
   }, [mobileMenuOpen]);
 
   const navItems = [
-    { label: 'Home', id: 'home' },
+    { label: 'Overview', id: 'home' },
     { label: 'Menu', id: 'menu' },
-    { label: 'Our Story', id: 'story' },
+    { label: 'Philosophy', id: 'story' },
     { label: 'The Craft', id: 'experience' },
-    { label: 'Specials', id: 'specials' },
+    { label: 'Seasonal', id: 'specials' },
     { label: 'Gallery', id: 'gallery' },
-    { label: 'Visit Us', id: 'visit' },
-    { label: 'Admin', id: 'admin' },
+    { label: 'Visit', id: 'visit' },
+    { label: 'Atelier Admin', id: 'admin' },
   ];
 
   const handleLinkClick = (id: string) => {
@@ -61,128 +60,129 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'bg-ivory/95 backdrop-blur-md border-b border-espresso/10 py-3.5 shadow-sm'
-            : 'bg-transparent py-5 sm:py-7'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 md:px-8 ${
+          isScrolled ? 'pt-3' : 'pt-5 sm:pt-6'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Logo & Brand Identity */}
-          <button
-            onClick={() => handleLinkClick('home')}
-            className="group text-left flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-caramel rounded-lg p-1 -m-1"
-            aria-label="NOIRÉ Café Home"
+          {/* Main Floating Capsule Dock */}
+          <div
+            className={`w-full flex items-center justify-between px-5 sm:px-7 py-3 rounded-full transition-all duration-500 border ${
+              isScrolled
+                ? 'bg-[#0E0E10]/90 backdrop-blur-xl border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
+                : 'bg-[#141416]/70 backdrop-blur-lg border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+            }`}
           >
-            <div className="w-8 h-8 rounded-full border border-espresso/30 flex items-center justify-center transition-transform duration-500 group-hover:rotate-45 group-hover:border-caramel">
-              <span className="font-serif text-sm font-semibold tracking-tighter text-espresso">N</span>
-            </div>
-            <div>
-              <span className="font-serif text-xl sm:text-2xl font-medium tracking-tight text-espresso block leading-none">
-                NOIRÉ
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-olive font-sans block mt-0.5">
-                Specialty Coffee
-              </span>
-            </div>
-          </button>
-
-          {/* Desktop Navigation Links with Animated Underline */}
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main Navigation">
-            {navItems.map((item) => {
-              const isActive = 
-                (item.id === 'menu' && currentView === 'menu') ||
-                (item.id === 'home' && currentView === 'home');
-
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleLinkClick(item.id)}
-                  className={`text-xs uppercase tracking-widest transition-colors duration-300 font-medium relative group py-1 focus-visible:ring-2 focus-visible:ring-caramel rounded px-1 -mx-1 ${
-                    isActive ? 'text-caramel font-semibold' : 'text-espresso/80 hover:text-caramel'
-                  }`}
-                >
-                  {item.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[1.5px] bg-caramel transition-all duration-300 ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  />
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Right Action: Cart Drawer Trigger & Magnetic Reservation */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            
-            {/* Opening Hours pill (Desktop only) */}
-            <div className="hidden xl:flex items-center gap-2 text-xs text-espresso/70 bg-ivory-dark/60 px-3 py-1.5 rounded-full border border-espresso/5">
-              <span className="w-2 h-2 rounded-full bg-olive animate-pulse" />
-              <span className="font-mono text-[11px]">Open Today · 07:30 – 19:00</span>
-            </div>
-
-            {/* Shopping Cart Button with Dynamic Badge */}
+            {/* Minimal Brandmark */}
             <button
-              onClick={openCart}
-              className="relative p-2.5 rounded-full bg-ivory-light border border-espresso/15 text-espresso hover:border-caramel hover:text-caramel transition-all duration-300 group flex items-center justify-center shadow-sm focus-visible:ring-2 focus-visible:ring-caramel"
-              aria-label={`View cart (${totalItems} items)`}
+              onClick={() => handleLinkClick('home')}
+              className="group text-left flex items-center gap-3 focus:outline-none rounded-full"
+              aria-label="NOIRÉ Atelier Home"
             >
-              <ShoppingBag className="w-4 h-4 transition-transform group-hover:scale-110" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-caramel text-ivory text-[10px] font-mono font-bold flex items-center justify-center shadow-md animate-scale">
-                  {totalItems}
+              <div className="w-8 h-8 rounded-full border border-champagne/40 bg-white/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-105 group-hover:border-champagne">
+                <span className="font-serif text-xs font-semibold tracking-tighter text-champagne">N</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-sans text-sm tracking-[0.25em] font-semibold text-white uppercase block leading-none">
+                  NOIRÉ
                 </span>
-              )}
+                <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-mono block mt-1">
+                  ATELIER · ZÜRICH
+                </span>
+              </div>
             </button>
 
-            {/* Magnetic Table Reservation Button */}
-            <div className="hidden sm:block">
-              <MagneticButton
-                onClick={onOpenReservation}
-                className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium overflow-hidden transition-all duration-300 hover:bg-caramel hover:shadow-md"
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-7" aria-label="Main Navigation">
+              {navItems.map((item) => {
+                const isActive = 
+                  (item.id === 'menu' && currentView === 'menu') ||
+                  (item.id === 'home' && currentView === 'home');
+
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleLinkClick(item.id)}
+                    className={`text-[11px] uppercase tracking-[0.2em] font-mono transition-all duration-200 relative py-1.5 flex items-center gap-1.5 ${
+                      isActive ? 'text-champagne font-semibold' : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    {isActive && <span className="w-1 h-1 rounded-full bg-champagne animate-pulse" />}
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+
+            {/* Right Action: Live Status, Cart & Reserve Table */}
+            <div className="flex items-center gap-3">
+              {/* Telemetry pill */}
+              <div className="hidden xl:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>ROASTERY OPEN · 07:30</span>
+              </div>
+
+              {/* Shopping Bag Trigger */}
+              <button
+                onClick={openCart}
+                className="relative p-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:border-champagne hover:text-champagne transition-all duration-300 group flex items-center justify-center focus-visible:ring-1 focus-visible:ring-champagne"
+                aria-label={`View cart (${totalItems} items)`}
               >
-                <span>Reserve Table</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </MagneticButton>
-            </div>
+                <ShoppingBag className="w-4 h-4 transition-transform group-hover:scale-110" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-champagne text-black text-[9px] font-mono font-bold flex items-center justify-center shadow-lg">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
 
-            {/* Animated Hamburger Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 p-2 rounded-full hover:bg-espresso/5 transition-colors focus-visible:ring-2 focus-visible:ring-caramel"
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              <motion.span
-                animate={mobileMenuOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="w-5 h-[1.5px] bg-espresso rounded-full block"
-              />
-              <motion.span
-                animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                className="w-5 h-[1.5px] bg-espresso rounded-full block"
-              />
-              <motion.span
-                animate={mobileMenuOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="w-5 h-[1.5px] bg-espresso rounded-full block"
-              />
-            </button>
+              {/* Magnetic Reservation Button */}
+              <div className="hidden sm:block">
+                <MagneticButton
+                  onClick={onOpenReservation}
+                  className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-[11px] font-mono uppercase tracking-widest font-semibold overflow-hidden transition-all duration-300 hover:bg-champagne hover:shadow-lg"
+                >
+                  <span>Reserve Atelier</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </MagneticButton>
+              </div>
+
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1 p-2 rounded-full bg-white/5 border border-white/10 text-white focus-visible:ring-1 focus-visible:ring-champagne"
+                aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
+              >
+                <motion.span
+                  animate={mobileMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-4 h-[1.5px] bg-white rounded-full block"
+                />
+                <motion.span
+                  animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-4 h-[1.5px] bg-white rounded-full block"
+                />
+                <motion.span
+                  animate={mobileMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-4 h-[1.5px] bg-white rounded-full block"
+                />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Scroll Progress Indicator Line */}
+        {/* Dynamic Scroll Hairline */}
         <div
-          className="absolute bottom-0 left-0 h-[2px] bg-caramel transition-all duration-100 ease-out"
+          className="max-w-7xl mx-auto h-[1px] bg-champagne/40 transition-all duration-100 ease-out mt-1"
           style={{ width: `${scrollProgress}%` }}
           aria-hidden="true"
         />
       </header>
 
-      {/* Full-Screen Luxury Mobile Navigation Overlay */}
+      {/* Full-Screen Modern Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -190,104 +190,80 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-espresso/70 backdrop-blur-md lg:hidden"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-2xl lg:hidden flex flex-col justify-between p-6 sm:p-10"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="absolute top-0 right-0 w-full max-w-sm h-full bg-ivory shadow-2xl p-6 sm:p-8 flex flex-col justify-between overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div>
-                {/* Header */}
-                <div className="flex items-center justify-between pb-6 border-b border-espresso/10">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-full border border-espresso/30 flex items-center justify-center">
-                      <span className="font-serif text-xs font-semibold">N</span>
-                    </div>
-                    <span className="font-serif text-2xl font-medium text-espresso">NOIRÉ</span>
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full border border-champagne/50 flex items-center justify-center">
+                    <span className="font-serif text-sm font-semibold text-champagne">N</span>
                   </div>
+                  <div>
+                    <span className="font-sans text-sm font-bold tracking-[0.2em] text-white uppercase block">NOIRÉ</span>
+                    <span className="text-[9px] font-mono tracking-widest text-white/40 uppercase block">Atelier</span>
+                  </div>
+                </div>
 
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="p-2 rounded-full hover:bg-espresso/5 text-espresso/70 hover:text-espresso transition-colors"
-                    aria-label="Close navigation"
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Navigation Items */}
+              <nav className="mt-8 flex flex-col gap-2">
+                {navItems.map((item, idx) => (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + idx * 0.04 }}
+                    onClick={() => handleLinkClick(item.id)}
+                    className="flex items-center justify-between text-left py-3.5 px-3 rounded-xl hover:bg-white/5 transition-colors border-b border-white/5 group"
                   >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+                    <span className={`text-lg font-mono tracking-wider uppercase ${
+                      item.id === currentView ? 'text-champagne font-bold' : 'text-white/80 group-hover:text-white'
+                    }`}>
+                      {item.label}
+                    </span>
+                    <span className="font-mono text-xs text-white/30 group-hover:text-champagne">
+                      [0{idx + 1}]
+                    </span>
+                  </motion.button>
+                ))}
+              </nav>
+            </div>
 
-                {/* Staggered Navigation Links */}
-                <nav className="mt-8 flex flex-col gap-3">
-                  {navItems.map((item, idx) => (
-                    <motion.button
-                      key={item.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.08 + idx * 0.05 }}
-                      onClick={() => handleLinkClick(item.id)}
-                      className="flex items-center justify-between text-left py-3.5 px-3 rounded-xl hover:bg-espresso/5 transition-colors border-b border-espresso/5 group"
-                    >
-                      <span className={`text-xl font-serif tracking-wide ${
-                        item.id === currentView ? 'text-caramel font-semibold' : 'text-espresso'
-                      }`}>
-                        {item.label}
-                      </span>
-                      <span className="font-mono text-xs text-olive group-hover:text-caramel transition-colors">
-                        0{idx + 1}
-                      </span>
-                    </motion.button>
-                  ))}
-                </nav>
-              </div>
+            {/* Bottom Actions in Drawer */}
+            <div className="space-y-3 pt-6 border-t border-white/10">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openCart();
+                }}
+                className="w-full py-3.5 px-4 rounded-xl bg-white/5 border border-white/10 text-white flex items-center justify-between text-xs font-mono uppercase tracking-widest"
+              >
+                <span className="flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4 text-champagne" />
+                  Cart Checkout
+                </span>
+                <span className="text-champagne font-bold">{totalItems} Items</span>
+              </button>
 
-              {/* Bottom Quick Actions */}
-              <div className="space-y-4 pt-6 border-t border-espresso/10">
-                {/* Cart Shortcut */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    openCart();
-                  }}
-                  className="w-full py-3.5 rounded-xl bg-ivory-light border border-espresso/10 flex items-center justify-between px-4 text-xs font-mono hover:border-caramel transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <ShoppingBag className="w-4 h-4 text-caramel" />
-                    <span>Shopping Cart</span>
-                  </div>
-                  <span className="bg-espresso text-ivory px-2.5 py-0.5 rounded-full font-bold">
-                    {totalItems} Items
-                  </span>
-                </button>
-
-                {/* Opening Hours & Address */}
-                <div className="text-xs text-espresso/70 space-y-1 font-mono">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-olive shrink-0" />
-                    <span>Mon – Sun: 07:30 – 19:00</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-olive shrink-0" />
-                    <span className="truncate">42 Limmatquai, 8001 Zürich</span>
-                  </div>
-                </div>
-
-                {/* Reservation CTA */}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenReservation();
-                  }}
-                  className="w-full py-4 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium flex items-center justify-center gap-2 hover:bg-caramel transition-colors shadow-md"
-                >
-                  <span>Reserve Table</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
-              </div>
-            </motion.div>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenReservation();
+                }}
+                className="w-full py-3.5 px-4 rounded-xl bg-champagne text-black flex items-center justify-center gap-2 text-xs font-mono uppercase tracking-widest font-bold shadow-lg"
+              >
+                <span>Reserve Table Experience</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

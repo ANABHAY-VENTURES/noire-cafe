@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check, ArrowRight } from 'lucide-react';
+import { X, Check, ArrowRight, Calendar, User, Mail, Phone, Users } from 'lucide-react';
 import { api } from '../../admin/api';
 
 interface ReservationModalProps {
@@ -49,7 +49,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
         setErrorMessage(res.message || 'Table reservation could not be confirmed.');
       }
     } catch {
-      // Fallback
+      // Fallback demo reservation
       setConfirmedReservation({
         reservationCode: `NCR-${Math.floor(100000 + Math.random() * 900000)}`,
         tableNumber: 'T-02',
@@ -80,7 +80,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
           role="dialog"
           aria-modal="true"
           aria-labelledby="reservation-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-espresso/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md"
           onClick={handleFinish}
         >
           <motion.div
@@ -88,207 +88,210 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg bg-ivory rounded-3xl p-6 sm:p-10 shadow-2xl border border-espresso/10 overflow-hidden"
+            className="relative w-full max-w-lg bg-[#141416] text-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-white/15 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={handleFinish}
-              className="absolute top-6 right-6 p-2 rounded-full bg-ivory-dark/60 text-espresso/70 hover:text-espresso hover:bg-ivory-dark transition-colors"
+              className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
             {confirmedReservation ? (
-              <div className="py-8 text-center space-y-6">
-                <div className="w-16 h-16 rounded-full bg-olive/20 text-olive mx-auto flex items-center justify-center">
+              /* Success confirmation */
+              <div className="space-y-6 text-center py-4">
+                <div className="w-16 h-16 rounded-full bg-champagne text-black flex items-center justify-center mx-auto">
                   <Check className="w-8 h-8" />
                 </div>
-                <div>
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-caramel block mb-1">
-                    BOOKING CONFIRMED · {confirmedReservation.reservationCode}
+
+                <div className="space-y-2">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-champagne block">
+                    RESERVATION CONFIRMED
                   </span>
-                  <h3 id="reservation-modal-title" className="font-serif text-3xl font-medium text-espresso">
-                    Table Reserved.
+                  <h3 className="font-sans text-2xl font-bold text-white">
+                    Table Reserved at NOIRÉ
                   </h3>
-                  <p className="text-xs text-espresso/70 font-sans max-w-xs mx-auto mt-1">
-                    We look forward to welcoming you for quiet reflection and slow extraction.
+                  <p className="text-xs font-mono text-white/60">
+                    Booking Reference: <span className="text-champagne font-bold">{confirmedReservation.reservationCode}</span>
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-ivory-light border border-espresso/10 text-left font-mono text-xs space-y-2.5">
-                  <div className="flex justify-between border-b border-espresso/10 pb-2">
-                    <span className="text-espresso/60">Booking Code</span>
-                    <span className="font-bold text-espresso">{confirmedReservation.reservationCode}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-espresso/10 pb-2">
-                    <span className="text-espresso/60">Assigned Table</span>
-                    <span className="font-semibold text-caramel">
-                      {confirmedReservation.tableNumber || 'Table T-01'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between border-b border-espresso/10 pb-2">
-                    <span className="text-espresso/60">Date & Slot</span>
-                    <span className="text-espresso font-semibold">
-                      {confirmedReservation.date} at {confirmedReservation.timeSlot}
-                    </span>
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-left space-y-2 text-xs font-mono">
+                  <div className="flex justify-between">
+                    <span className="text-white/50">Guest:</span>
+                    <span className="text-white font-medium">{confirmedReservation.customer?.name || formData.name}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-espresso/60">Party Size</span>
-                    <span className="text-espresso">{confirmedReservation.guestCount} Guests</span>
+                    <span className="text-white/50">Date & Slot:</span>
+                    <span className="text-white font-medium">{confirmedReservation.date} · {confirmedReservation.timeSlot}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/50">Table Allocation:</span>
+                    <span className="text-champagne font-bold">{confirmedReservation.tableNumber || 'Table 04'} (Quiet Zone)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/50">Party Size:</span>
+                    <span className="text-white font-medium">{confirmedReservation.guestCount || formData.guests} Guests</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handleFinish}
-                  className="px-8 py-3.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-mono font-medium hover:bg-caramel transition-colors"
+                  className="w-full py-4 rounded-full bg-champagne text-black text-xs font-mono uppercase tracking-widest font-bold hover:bg-white transition-colors"
                 >
-                  Close & Return
+                  Done
                 </button>
               </div>
             ) : (
-              <div>
-                <div className="mb-6">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-olive block mb-1">
-                    NOIRÉ ZÜRICH · TABLE RESERVATIONS
+              /* Reservation Form */
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-champagne block">
+                    [TABLE EXPERIENCE]
                   </span>
-                  <h3 id="reservation-modal-title" className="font-serif text-3xl font-normal text-espresso">
-                    Reserve Your Table.
+                  <h3 id="reservation-modal-title" className="font-sans text-2xl font-bold text-white mt-1">
+                    Reserve Atelier Table
                   </h3>
-                  <p className="text-xs text-espresso/70 font-sans mt-1">
-                    A deliberate sanctuary for quiet dialogue, reading, and pour-over journeys.
+                  <p className="text-xs text-white/60 font-sans mt-0.5">
+                    Select your preferred extraction time and sensory seating area.
                   </p>
                 </div>
 
                 {errorMessage && (
-                  <div className="p-3 mb-4 rounded-xl bg-red-500/10 text-red-700 text-xs font-mono text-center">
+                  <div className="p-3 rounded-xl bg-red-950/50 border border-red-500/30 text-red-200 text-xs font-mono">
                     {errorMessage}
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="res-name" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                        Your Full Name
+                <div className="space-y-3.5 text-xs font-mono">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                      <User className="w-3 h-3 text-champagne" /> Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your full name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-champagne focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                        <Mail className="w-3 h-3 text-champagne" /> Email
                       </label>
                       <input
-                        id="res-name"
-                        type="text"
+                        type="email"
                         required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Mia Lindqvist"
-                        className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-sm text-espresso focus:outline-none focus:border-caramel"
+                        placeholder="name@domain.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-champagne focus:outline-none"
                       />
                     </div>
 
-                    <div>
-                      <label htmlFor="res-phone" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                        Phone Number
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                        <Phone className="w-3 h-3 text-champagne" /> Phone
                       </label>
                       <input
-                        id="res-phone"
                         type="tel"
                         required
+                        placeholder="+41 44 211 40 00"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+91..."
-                        className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-sm text-espresso focus:outline-none focus:border-caramel font-mono"
+                        className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-champagne focus:outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                      <label htmlFor="res-date" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                        Date
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                        <Calendar className="w-3 h-3 text-champagne" /> Date
                       </label>
                       <input
-                        id="res-date"
                         type="date"
                         required
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
+                        className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:border-champagne focus:outline-none"
                       />
                     </div>
 
-                    <div>
-                      <label htmlFor="res-time" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                        Slot
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                        <Users className="w-3 h-3 text-champagne" /> Guests
                       </label>
                       <select
-                        id="res-time"
-                        value={formData.time}
-                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
-                      >
-                        {timeSlots.map((ts) => (
-                          <option key={ts} value={ts}>{ts}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label htmlFor="res-guests" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                        Guests
-                      </label>
-                      <input
-                        id="res-guests"
-                        type="number"
-                        min="1"
-                        max="12"
-                        required
                         value={formData.guests}
                         onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
-                      />
+                        className="w-full px-3 py-2.5 rounded-xl bg-[#18181B] border border-white/10 text-white focus:border-champagne focus:outline-none"
+                      >
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4">4 Persons</option>
+                        <option value="6">6 Persons (Table Master)</option>
+                      </select>
                     </div>
                   </div>
 
-                  <div>
-                    <label htmlFor="res-area" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                      Seating Preference
+                  {/* Time Slots */}
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-white/50 uppercase tracking-wider block">
+                      Time Slot
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {timeSlots.map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, time: slot })}
+                          className={`py-1.5 text-center rounded-lg text-[11px] font-mono transition-colors border ${
+                            formData.time === slot
+                              ? 'bg-champagne text-black border-champagne font-bold'
+                              : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10'
+                          }`}
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Seating area */}
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-white/50 uppercase tracking-wider block">
+                      Atmosphere Zone
                     </label>
                     <select
-                      id="res-area"
                       value={formData.seatingArea}
                       onChange={(e) => setFormData({ ...formData, seatingArea: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-mono"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#18181B] border border-white/10 text-white focus:border-champagne focus:outline-none"
                     >
-                      <option value="Courtyard Atrium">Courtyard Atrium (Morning Light)</option>
-                      <option value="Main Hall">Main Hall (Monolithic Terrazzo Bar)</option>
-                      <option value="North Reading Corner">North Reading Corner (Low-Acoustic Solitude)</option>
-                      <option value="Slow Bar">Slow Bar (Direct Barista Dialogue)</option>
+                      <option value="Courtyard Atrium">Courtyard Atrium (Natural Daylight)</option>
+                      <option value="Slow Extraction Bar">Slow Extraction Bar (Barista Interaction)</option>
+                      <option value="Library Reading Corner">Library Reading Corner (Acoustic Silence)</option>
                     </select>
                   </div>
+                </div>
 
-                  <div>
-                    <label htmlFor="res-requests" className="block text-[11px] font-mono uppercase tracking-wider text-espresso/70 mb-1.5">
-                      Special Requests / Dietary Notes
-                    </label>
-                    <textarea
-                      id="res-requests"
-                      rows={2}
-                      value={formData.specialRequests}
-                      onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
-                      placeholder="e.g. Quiet table for coffee cupping..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-ivory-light border border-espresso/15 text-xs text-espresso focus:outline-none focus:border-caramel font-sans"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-4 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-mono font-medium hover:bg-caramel transition-colors flex items-center justify-center gap-2 mt-4 shadow-lg disabled:opacity-50"
-                  >
-                    <span>{isSubmitting ? 'Checking Availability...' : 'Confirm Table Booking'}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </form>
-              </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-full bg-champagne text-black text-xs font-mono uppercase tracking-widest font-bold hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 mt-2"
+                >
+                  <span>{isSubmitting ? 'Confirming...' : 'Confirm Table Reservation'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
             )}
           </motion.div>
         </div>

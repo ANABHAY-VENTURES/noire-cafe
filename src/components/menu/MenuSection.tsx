@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../../data/coffeeData';
 import { MenuItem } from '../../types';
 import { useCart } from '../../context/CartContext';
-import { ArrowUpRight, X, Check, Plus, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, X, Check, ArrowRight } from 'lucide-react';
 
 interface MenuSectionProps {
   onViewFullMenu?: () => void;
@@ -22,7 +22,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
   const handleOrder = (item: MenuItem, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     addToCart(item, 1);
-    setOrderNotice(`Added ${item.name} to your order.`);
+    setOrderNotice(`Added ${item.name} to order.`);
     setTimeout(() => setOrderNotice(null), 3000);
   };
 
@@ -32,35 +32,35 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
   };
 
   return (
-    <section id="menu" className="py-24 md:py-36 px-6 md:px-12 bg-ivory relative">
+    <section id="menu" className="py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-espresso/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-olive block mb-2">
-              02 / The Curated Offerings
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-champagne block mb-2">
+              [02 // CURATED EXTRACTIONS]
             </span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal text-espresso tracking-tight">
+            <h2 className="font-sans text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
               Explore Our Menu.
             </h2>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
-            <p className="text-sm md:text-base text-espresso/70 max-w-xs font-sans leading-relaxed">
-              Every beverage is calibrated to order with single-origin micro-lots roasted in small batches.
+            <p className="text-sm text-white/60 max-w-xs font-sans font-light leading-relaxed">
+              Every single beverage is calibrated to order with single-origin micro-lots roasted in small batches.
             </p>
             {onViewFullMenu && (
               <button
                 onClick={onViewFullMenu}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-mono hover:bg-caramel transition-colors shrink-0 group"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-xs font-mono uppercase tracking-widest font-semibold hover:bg-champagne transition-colors shrink-0 group"
               >
-                <span>Full Menu</span>
+                <span>Full Archive</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </button>
             )}
           </div>
         </div>
 
-        {/* Category Pills */}
+        {/* Category Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto py-8 no-scrollbar">
           {MENU_CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat.id;
@@ -68,10 +68,10 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-widest whitespace-nowrap transition-all duration-300 ${
+                className={`px-5 py-2.5 rounded-full text-[11px] font-mono uppercase tracking-widest whitespace-nowrap transition-all duration-300 border ${
                   isActive
-                    ? 'bg-espresso text-ivory shadow-md'
-                    : 'bg-ivory-dark/50 text-espresso/80 hover:bg-ivory-dark hover:text-espresso'
+                    ? 'bg-white text-black border-white font-bold shadow-lg'
+                    : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 {cat.label}
@@ -80,19 +80,19 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
           })}
         </div>
 
-        {/* Interactive Notification */}
+        {/* Interactive Notice */}
         {orderNotice && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="mb-6 p-4 rounded-xl bg-olive/15 border border-olive/30 text-espresso text-xs font-mono flex items-center justify-between"
+            className="mb-6 p-4 rounded-xl bg-champagne/15 border border-champagne/30 text-champagne text-xs font-mono flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-olive" />
+              <Check className="w-4 h-4 text-champagne" />
               <span>{orderNotice}</span>
             </div>
-            <button onClick={() => setOrderNotice(null)} className="text-espresso/60 hover:text-espresso">
+            <button onClick={() => setOrderNotice(null)} className="text-white/60 hover:text-white">
               <X className="w-4 h-4" />
             </button>
           </motion.div>
@@ -101,7 +101,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
         {/* Product Cards Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence>
             {filteredItems.map((item) => {
@@ -116,27 +116,27 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
                   onClick={() => setSelectedItem(item)}
-                  className="group relative rounded-2xl bg-ivory-light border border-espresso/10 p-6 flex flex-col justify-between hover:border-caramel/40 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                  className="group relative rounded-2xl bg-[#121214] border border-white/10 p-6 flex flex-col justify-between hover:border-champagne/50 hover:bg-[#16161A] transition-all duration-300 cursor-pointer"
                 >
                   <div>
-                    {/* Image & Badges */}
-                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-ivory-dark">
+                    {/* Visual Image & Badges */}
+                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-black border border-white/5">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-espresso/40 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                       
                       {item.badge && (
-                        <span className="absolute top-3 left-3 bg-espresso/80 backdrop-blur-sm text-ivory px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase">
+                        <span className="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-champagne px-3 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase border border-white/10">
                           {item.badge}
                         </span>
                       )}
 
                       {item.temperature && (
-                        <span className="absolute top-3 right-3 bg-ivory/90 backdrop-blur-sm text-espresso px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider">
+                        <span className="absolute top-3 right-3 bg-white/10 backdrop-blur-md text-white/90 px-2.5 py-1 rounded-full text-[9px] font-mono tracking-wider border border-white/10">
                           {item.temperature}
                         </span>
                       )}
@@ -144,26 +144,26 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
 
                     {/* Header & Price */}
                     <div className="flex items-baseline justify-between gap-4 mb-2">
-                      <h3 className="font-serif text-xl font-medium text-espresso group-hover:text-caramel transition-colors">
+                      <h3 className="font-sans text-xl font-bold text-white group-hover:text-champagne transition-colors">
                         {item.name}
                       </h3>
-                      <span className="font-serif text-lg font-medium text-caramel shrink-0">
+                      <span className="font-mono text-lg font-bold text-champagne shrink-0">
                         {item.price}
                       </span>
                     </div>
 
                     {/* Description */}
-                    <p className="text-xs text-espresso/70 leading-relaxed font-sans mb-4">
+                    <p className="text-xs text-white/60 leading-relaxed font-sans font-light mb-4">
                       {item.description}
                     </p>
 
                     {/* Origin & Elevation */}
                     {item.origin && (
-                      <div className="flex items-center gap-3 text-[11px] font-mono text-olive mb-4">
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-white/50 mb-4">
                         <span>{item.origin}</span>
                         {item.elevation && (
                           <>
-                            <span>•</span>
+                            <span>/</span>
                             <span>{item.elevation}</span>
                           </>
                         )}
@@ -175,7 +175,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
                       {item.notes.map((note) => (
                         <span
                           key={note}
-                          className="px-2.5 py-1 rounded-md bg-ivory-dark/60 text-espresso/80 text-[10px] font-mono uppercase tracking-wider"
+                          className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-white/70 text-[9px] font-mono uppercase tracking-wider"
                         >
                           {note}
                         </span>
@@ -184,24 +184,24 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
                   </div>
 
                   {/* Card Action Buttons */}
-                  <div className="pt-4 border-t border-espresso/5 flex items-center justify-between gap-3">
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
                     <button
                       onClick={() => setSelectedItem(item)}
-                      className="text-xs uppercase tracking-wider font-mono text-espresso/70 hover:text-espresso flex items-center gap-1 group/btn"
+                      className="text-[11px] uppercase tracking-wider font-mono text-white/60 hover:text-white flex items-center gap-1 group/btn"
                     >
-                      <span>Extraction Specs</span>
+                      <span>Telemetry</span>
                       <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                     </button>
 
                     <button
                       onClick={(e) => handleOrder(item, e)}
-                      className={`px-4 py-2 rounded-full text-[11px] uppercase tracking-wider font-medium transition-all ${
+                      className={`px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold transition-all ${
                         qtyInCart > 0
-                          ? 'bg-olive text-ivory'
-                          : 'bg-espresso text-ivory hover:bg-caramel'
+                          ? 'bg-champagne text-black'
+                          : 'bg-white text-black hover:bg-champagne'
                       }`}
                     >
-                      {qtyInCart > 0 ? `In Order (${qtyInCart})` : 'Add to Order'}
+                      {qtyInCart > 0 ? `In Order (${qtyInCart})` : 'Order Item'}
                     </button>
                   </div>
                 </motion.div>
@@ -212,20 +212,20 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
 
         {/* View All Bottom Banner */}
         {onViewFullMenu && (
-          <div className="mt-12 p-8 rounded-2xl bg-ivory-light border border-espresso/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="mt-12 p-8 rounded-2xl bg-[#121214] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-caramel">
-                FULL SPECIALTY CATALOG
+              <span className="text-[10px] font-mono uppercase tracking-widest text-champagne">
+                ATELIER ARCHIVES
               </span>
-              <h3 className="font-serif text-2xl font-medium text-espresso">
-                Over 20 curated extractions, cold brews, and fresh bakery specialties.
+              <h3 className="font-sans text-2xl font-bold text-white">
+                Over 20 curated extractions, cold brews, and seasonal roasts.
               </h3>
             </div>
             <button
               onClick={onViewFullMenu}
-              className="px-8 py-3.5 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors flex items-center gap-2 shadow-md shrink-0"
+              className="px-7 py-3.5 rounded-full bg-white text-black text-xs font-mono uppercase tracking-widest font-semibold hover:bg-champagne transition-colors flex items-center gap-2 shadow-lg shrink-0"
             >
-              <span>Explore Complete Menu</span>
+              <span>Explore Complete Catalog</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -236,25 +236,37 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
       <AnimatePresence>
         {selectedItem && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-espresso/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
             onClick={() => setSelectedItem(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-ivory rounded-2xl p-6 sm:p-8 shadow-2xl border border-espresso/10 overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
+              className="bg-[#141416] border border-white/15 rounded-3xl max-w-lg w-full p-8 shadow-2xl relative overflow-hidden"
             >
               <button
                 onClick={() => setSelectedItem(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-ivory-dark text-espresso hover:bg-espresso hover:text-ivory transition-colors z-10"
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-                <div className="aspect-square rounded-xl overflow-hidden bg-ivory-dark">
+              <div className="space-y-6">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-champagne">
+                    {selectedItem.category} // {selectedItem.temperature || 'SERVED CALM'}
+                  </span>
+                  <h3 className="font-sans text-3xl font-bold text-white mt-1">
+                    {selectedItem.name}
+                  </h3>
+                  <div className="text-xl font-mono text-champagne font-bold mt-1">
+                    {selectedItem.price}
+                  </div>
+                </div>
+
+                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black border border-white/10">
                   <img
                     src={selectedItem.image}
                     alt={selectedItem.name}
@@ -262,57 +274,25 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onViewFullMenu }) => {
                   />
                 </div>
 
-                <div className="space-y-4">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-olive bg-olive/15 px-3 py-1 rounded-full">
-                    {selectedItem.category.toUpperCase()} · RESERVE SPEC
-                  </span>
+                <p className="text-sm text-white/70 leading-relaxed font-sans font-light">
+                  {selectedItem.description}
+                </p>
 
-                  <h3 className="font-serif text-2xl font-medium text-espresso">
-                    {selectedItem.name}
-                  </h3>
-
-                  <div className="font-serif text-xl text-caramel font-medium">
-                    {selectedItem.price}
+                {selectedItem.process && (
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-white/60 font-mono">
+                    PROCESS: {selectedItem.process} {selectedItem.elevation ? `· ELEVATION: ${selectedItem.elevation}` : ''}
                   </div>
+                )}
 
-                  <p className="text-xs text-espresso/70 leading-relaxed font-sans">
-                    {selectedItem.description}
-                  </p>
-
-                  <div className="space-y-2 py-3 border-y border-espresso/10 text-xs font-mono">
-                    {selectedItem.origin && (
-                      <div className="flex justify-between">
-                        <span className="text-espresso/60">Origin</span>
-                        <span className="text-espresso">{selectedItem.origin}</span>
-                      </div>
-                    )}
-                    {selectedItem.process && (
-                      <div className="flex justify-between">
-                        <span className="text-espresso/60">Processing</span>
-                        <span className="text-espresso">{selectedItem.process}</span>
-                      </div>
-                    )}
-                    {selectedItem.elevation && (
-                      <div className="flex justify-between">
-                        <span className="text-espresso/60">Elevation</span>
-                        <span className="text-espresso">{selectedItem.elevation}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between">
-                      <span className="text-espresso/60">Recommended Cup</span>
-                      <span className="text-espresso">Swiss Stoneware 180ml</span>
-                    </div>
-                  </div>
-
+                <div className="flex items-center gap-3 pt-2">
                   <button
                     onClick={() => {
                       handleOrder(selectedItem);
                       setSelectedItem(null);
                     }}
-                    className="w-full py-3 rounded-full bg-espresso text-ivory text-xs uppercase tracking-widest font-medium hover:bg-caramel transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-full bg-champagne text-black text-xs font-mono uppercase tracking-widest font-bold hover:bg-white transition-colors"
                   >
-                    <Plus className="w-4 h-4" />
-                    <span>Add to Order ({selectedItem.price})</span>
+                    Add to Cart ({selectedItem.price})
                   </button>
                 </div>
               </div>
