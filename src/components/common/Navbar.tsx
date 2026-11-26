@@ -45,11 +45,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
     { label: 'Overview', id: 'home' },
     { label: 'Menu', id: 'menu' },
     { label: 'Philosophy', id: 'story' },
-    { label: 'The Craft', id: 'experience' },
+    { label: 'Craft', id: 'experience' },
     { label: 'Seasonal', id: 'specials' },
     { label: 'Gallery', id: 'gallery' },
     { label: 'Visit', id: 'visit' },
-    { label: 'Atelier Admin', id: 'admin' },
+    { label: 'Admin', id: 'admin' },
   ];
 
   const handleLinkClick = (id: string) => {
@@ -77,24 +77,24 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
             {/* Minimal Brandmark */}
             <button
               onClick={() => handleLinkClick('home')}
-              className="group text-left flex items-center gap-3 focus:outline-none rounded-full"
+              className="group text-left flex items-center gap-3 focus:outline-none rounded-full shrink-0"
               aria-label="NOIRÉ Atelier Home"
             >
-              <div className="w-8 h-8 rounded-full border border-champagne/40 bg-white/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-105 group-hover:border-champagne">
+              <div className="w-8 h-8 rounded-full border border-champagne/40 bg-white/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-105 group-hover:border-champagne shrink-0">
                 <span className="font-serif text-xs font-semibold tracking-tighter text-champagne">N</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-sans text-sm tracking-[0.25em] font-semibold text-white uppercase block leading-none">
+              <div className="flex flex-col shrink-0">
+                <span className="font-sans text-sm tracking-[0.25em] font-semibold text-white uppercase block leading-none whitespace-nowrap">
                   NOIRÉ
                 </span>
-                <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-mono block mt-1">
+                <span className="text-[9px] uppercase tracking-[0.25em] text-white/40 font-mono block mt-1 whitespace-nowrap">
                   ATELIER · ZÜRICH
                 </span>
               </div>
             </button>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-7" aria-label="Main Navigation">
+            <nav className="hidden lg:flex items-center gap-4 xl:gap-7 shrink-0" aria-label="Main Navigation">
               {navItems.map((item) => {
                 const isActive = 
                   (item.id === 'menu' && currentView === 'menu') ||
@@ -104,19 +104,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenR
                   <button
                     key={item.id}
                     onClick={() => handleLinkClick(item.id)}
-                    className={`text-[11px] uppercase tracking-[0.2em] font-mono transition-all duration-200 relative py-1.5 flex items-center gap-1.5 ${
+                    className={`text-[11px] uppercase tracking-[0.18em] font-mono transition-all duration-200 relative py-1.5 flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                       isActive ? 'text-champagne font-semibold' : 'text-white/60 hover:text-white'
                     }`}
                   >
-                    {isActive && <span className="w-1 h-1 rounded-full bg-champagne animate-pulse" />}
-                    <span>{item.label}</span>
+                    {isActive && <span className="w-1 h-1 rounded-full bg-champagne animate-pulse shrink-0" />}
+                    <span className="whitespace-nowrap">{item.label}</span>
                   </button>
                 );
               })}
             </nav>
 
             {/* Right Action: Live Status, Cart & Reserve Table */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0">
               {/* Telemetry pill */}
               <div className="hidden xl:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
